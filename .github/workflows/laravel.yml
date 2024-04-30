@@ -10,9 +10,13 @@ jobs:
     steps:
       - name: Checking Databases with the name social_media
         run: mysql -e 'drop database if exists social_media; create database social_media;'
+      - name: Show Databases
+        run: mysql -e 'show databases;'
   Laravel_Deploy:
     runs-on: self-hosted
     steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4 
       - name: Install the required laravel dependencies
         run: sudo apt install -y mysql-server php npm php-xml php-mbstring php-curl php-mysql php-gd unzip
       - name: Installing the composer

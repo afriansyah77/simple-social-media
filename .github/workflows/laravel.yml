@@ -37,10 +37,5 @@ jobs:
       - name: membuat link simbolis storage
         run: php artisan storage:link
       - name: running a local development server
-        run: php artisan serve --host=0.0.0.0 --port=8000 &
-      - name: move laravel.service to /etc/systemd/system/
-        run: sudo mv laravel.service /etc/systemd/system/
-      - name: change permission to execute laravel.service
-        run: sudo chmod +x /etc/systemd/system/laravel.service
-      - name: enable and run service laravel
-        run: sudo systemctl enable --now laravel.service
+        run: |
+          php artisan serve --host=0.0.0.0 --port=8000 &

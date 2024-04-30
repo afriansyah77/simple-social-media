@@ -1,0 +1,33 @@
+name: Laravel application (Mysql)
+run-name: Deploy Image
+on:
+  push:
+    branches:
+      - main
+jobs:
+  mysql_config:
+    runs-on: self-hosted
+    steps:
+      - name: Checking Databases with the name social_media
+        run: mysql -e 'drop database if exists social_media; create database social_media;'
+  Laravel_Deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Install the required laravel dependencies
+        run: sudo apt install -y mysql-server php npm php-xml php-mbstring php-curl php-mysql php-gd unzip
+      - name: Installing the composer
+        run: sudo curl -sS https://getcomposer.org/installer -o composer-setup.php && sudo php composer-setup.php --install-dir=/usr/bin --filename=composer
+      - name: Installing Packages from package.json
+        run: npm install
+      - name: Installing Packages from composer.json
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      - name: Generate key
+        run: php artisan key:generate
+      - name: Run Migrations
+        run: php artisan migrate --seed
+      - name: membuat link simbolis storage
+        run: php artisan storage:link
+      - name: running a local development server
+        run: php artisan serve --host=0.0.0.0 --port=8000 &

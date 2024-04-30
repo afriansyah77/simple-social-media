@@ -1,5 +1,5 @@
 name: Laravel application (Mysql)
-run-name: Deploy Image
+run-name: Deploy Laravel in Self-Hosted runner
 on:
   push:
     branches:
@@ -16,6 +16,7 @@ jobs:
         run: mysqlshow social_media
   Laravel_Deploy:
     runs-on: self-hosted
+    needs: mysql_config
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4 

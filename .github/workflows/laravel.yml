@@ -12,6 +12,8 @@ jobs:
         run: mysql -e 'drop database if exists social_media; create database social_media;'
       - name: Show Databases
         run: mysql -e 'show databases;'
+      - name: Show table in database social_media
+        run: mysqlshow social_media
   Laravel_Deploy:
     runs-on: self-hosted
     steps:

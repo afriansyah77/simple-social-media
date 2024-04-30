@@ -39,5 +39,5 @@ jobs:
       - name: running a local development server
         run: |
           php artisan serve --host=0.0.0.0 --port=8000 &
-      - name: Wait for process to finish
-        run: wait $!
+      - name: Test-curl
+        run: curl localhost:8000 

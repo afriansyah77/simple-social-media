@@ -8,8 +8,18 @@ on:
 env:
   IMAGE_NAME: "afrisyah/btatest-simple-social-media"
 jobs:
+  run-mysql-in-docker:
+    runs-on: vm-server
+    steps:
+      - name: Delete container mysql if exist
+        run: docker rm -f $(docker ps -a | grep mysql | awk '{print $1}')
+      - name: Running mysql in container
+        run:  docker run -d --name mysql -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=social_media -p 3306:3306 mysql:5.7
+      - name: List docker container
+        run: docker ps -a
   build-push-image:
-    runs-on: ubuntu-latest
+    needs: run-mysql-in-docker
+    runs-on: vm-server
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -27,7 +37,7 @@ jobs:
 
   deploy-social-media:
     needs: build-push-image
-    runs-on: self-hosted
+    runs-on: vm-server
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4

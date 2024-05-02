@@ -1,7 +1,8 @@
-FROM ubuntu/apache2
+# Dockerfile
+FROM ubuntu:22.04
 
 RUN apt update -y && \
-    apt install -y mysql-server \
+    DEBIAN_FRONTEND=noninteractive apt install -y mysql-server \
     php \
     npm \
     php-xml \
@@ -11,8 +12,7 @@ RUN apt update -y && \
     php-gd \
     unzip \
     nano  \
-    curl && \
-    ln -sf /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
+    curl
 RUN curl -sS https://getcomposer.org/installer -o composer-setup.php && \
     php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 

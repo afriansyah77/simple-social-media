@@ -1,0 +1,7 @@
+# docker-compose.yml
+version: "3"
+services:
+  web:
+    image: afrisyah/btatest-simple-social-media
+    ports:
+      - "8000:8000"

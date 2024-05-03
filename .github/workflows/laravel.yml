@@ -9,7 +9,7 @@ env:
   IMAGE_NAME: "afrisyah/btatest-simple-social-media"
 jobs:
   run-mysql-in-docker:
-    runs-on: vm-server
+    runs-on: self-hosted
     steps:
       - name: Delete container mysql if exist
         continue-on-error: true
@@ -20,7 +20,7 @@ jobs:
         run: docker ps -a
   build-push-image:
     needs: run-mysql-in-docker
-    runs-on: vm-server
+    runs-on: self-hosted
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -38,7 +38,7 @@ jobs:
 
   deploy-social-media:
     needs: build-push-image
-    runs-on: vm-server
+    runs-on: self-hosted
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
